@@ -1,0 +1,25 @@
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:component-scan base-package="com.atm" />
+ 
+	<bean id="savingsAccount" class="com.atm.SavingsAccount" scope="prototype">
+	      	<constructor-arg type="int" value="1001"></constructor-arg>
+	      	<constructor-arg type="java.lang.String" value="Tom"></constructor-arg>
+	      	<constructor-arg type="double" value="35000"></constructor-arg>
+	      </bean>
+	      <bean id="salaryAccount" class="com.atm.SalaryAccount" scope="prototype">
+	      	<constructor-arg type="int" value="1003"></constructor-arg>
+	      	<constructor-arg type="java.lang.String" value="Jerry"></constructor-arg>
+	      	<constructor-arg type="double" value="45000"></constructor-arg>
+	      </bean>
+	     
+	     <bean id = "customEventHandler" class = "com.atm.TransactionEventListener"/>
+	   	<bean id = "customEventPublisher" class = "com.atm.WithdrawalEventPublisher"/>
+</beans>
