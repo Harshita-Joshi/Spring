@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.springboot.workers.crudapi.model.Worker;
 
-import java.sql.Date;
-
 
 public interface WorkerDAO {
-    public boolean add(Worker worker)
+    public boolean addWorker(Worker worker)
             throws SQLException;
 
-    public boolean delete(int workerId)
+    public boolean deleteWorkerById(int workerId)
             throws SQLException;
 
     public Worker getWorker(int workerId)

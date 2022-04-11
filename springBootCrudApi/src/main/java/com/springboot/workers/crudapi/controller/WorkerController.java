@@ -1,6 +1,5 @@
 package com.springboot.workers.crudapi.controller;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.workers.crudapi.model.Worker;
-import com.springboot.workers.crudapi.repository.WorkerRepository;
+import com.springboot.workers.crudapi.service.WorkerService;
 
 
 @RestController
@@ -26,36 +25,36 @@ import com.springboot.workers.crudapi.repository.WorkerRepository;
 public class WorkerController {
 	
 	@Autowired
-	private WorkerRepository wrepo;
+	private WorkerService wservice;
 	
 	@GetMapping("/showWorker/{id}")
 	public Worker showWorker(@PathVariable int id){
 		
-		return this.wrepo.getWorker(id);
+		return this.wservice.getWorker(id);
 		
 	}
 	
 	@GetMapping("/all/showWorkers")
 	public List<Worker> showWorkers(){
 		
-		return this.wrepo.getWorkers();
+		return this.wservice.getWorkers();
 		
 	}
 	
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Boolean addWorker(@RequestBody Worker worker){
-		return this.wrepo.add(worker);
+		return this.wservice.add(worker);
 	}
 	
 	@PatchMapping("/update/{id}")
 	public Boolean updateWorker(@RequestBody Map<String, String> params, @PathVariable int id) throws SQLException{
-			return this.wrepo.updateWorkerEmail(params.get("email"), id);
+			return this.wservice.updateWorkerById(params.get("email"), id);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public Boolean deleteWorker(@PathVariable int id){
-		return this.wrepo.delete(id);
+		return this.wservice.delete(id);
 	}
 	
 	

@@ -1,6 +1,5 @@
 package com.springboot.workers.crudapi.repository;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class WorkerRepository implements WorkerDAO {
 	JdbcTemplate jdbcTemplateObject;
 	
 	
-	public boolean add(Worker worker) {
+	public boolean addWorker(Worker worker) {
 		String sql = "INSERT INTO worker VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
 		int rowAffected = jdbcTemplateObject.update(sql, worker.getWORKER_ID(), worker.getFIRST_NAME(), worker.getLAST_NAME(), worker.getSALARY(), worker.getJOINING_DATE(), worker.getDEPARTMENT(), worker.getEmail());		
@@ -52,12 +51,14 @@ public class WorkerRepository implements WorkerDAO {
 	}
 	
 	public int replace(int id, String email) {
-		String sql = "UPDATE worker SET email = "+"'email'"+" WHERE worker_id = ?";
-		return jdbcTemplateObject.update(sql,id);
+		String sql = """
+					UPDATE worker SET email = ? WHERE worker_id = ?
+				""";
+		return jdbcTemplateObject.update(sql,email,id);
 		
 	}
 	
-	public boolean delete(int id) {
+	public boolean deleteWorkerById(int id) {
 		String sql = "DELETE FROM worker WHERE worker_id = ?";
 		int rowaffected = jdbcTemplateObject.update(sql, id);
 		return (rowaffected==1);
@@ -67,7 +68,10 @@ public class WorkerRepository implements WorkerDAO {
 	@Override
 	public boolean updateWorkerEmail(String email, int id) throws SQLException {
 		// TODO Auto-generated method stub
-		int rowsAffected = replace(id, email);
+		String sql = """
+				UPDATE worker SET email = ? WHERE worker_id = ?
+			""";
+		int rowsAffected = jdbcTemplateObject.update(sql,email,id);
 		if(rowsAffected==0)
 			return false;
 		return true;
